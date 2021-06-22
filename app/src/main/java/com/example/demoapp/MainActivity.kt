@@ -1,8 +1,10 @@
 package com.example.demoapp
 
 import android.os.Bundle
+import android.widget.EditText
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -22,18 +24,23 @@ class MainActivity : ComponentActivity() {
         setContent {
             Column(
                 modifier = Modifier
-                    .width(200.dp)
-                    .fillMaxHeight(0.7f)
-                    .background(Color.Companion.Yellow),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceEvenly
+                    .background(Color.Yellow)
+                    .padding(20.dp, 40.dp)
+                    .fillMaxHeight(0.5f)
+                    .fillMaxWidth()
             ) {
-                Text("Hello ")
+                Text(
+                    "Hello ", modifier = Modifier
+                        .offset(0.dp,20.dp),
+                    color = Color.Red,
+                )
+                Spacer(modifier = Modifier.height(10.dp))
                 Text("World ")
-                Text(" !")
+
             }
 
         }
+
     }
 }
 
