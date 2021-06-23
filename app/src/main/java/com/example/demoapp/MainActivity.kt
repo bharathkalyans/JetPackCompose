@@ -17,7 +17,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -25,79 +32,94 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val painter = painterResource(id = R.drawable.two)
-            val title = "Kermit drinking Green Tea!"
-            val description = "Kermit is Enjoying XD"
+
 
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(0.7f)
-                    .fillMaxHeight(0.3f)
-                    .padding(16.dp)
+                    .fillMaxSize()
+                    .background(Color.Black)
             ) {
-                ImageCard(
-                    painter = painter,
-                    title = title,
-                    contentDescription = description,
-                )
-            }
-
-
-        }
-    }
-
-    @Composable
-    fun ImageCard(
-        painter: Painter,
-        title: String,
-        contentDescription: String,
-        modifier: Modifier = Modifier
-    ) {
-        Card(
-            modifier = modifier,
-            shape = RoundedCornerShape(20.dp),
-            elevation = 5.dp
-        ) {
-            Box(modifier = Modifier.height(400.dp)) {
-                //Image
-                Image(
-                    painter = painter,
-                    contentDescription = contentDescription,
-                    contentScale = ContentScale.Crop
-                )
-                //Using for Gradient!
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(
-                            Brush.verticalGradient(
-                                colors = listOf(Color.Transparent, Color.Black),
-                                startY = 300f
-                            )
-                        )
-                )
-                //Text
                 Text(
-                    text = title,
-                    modifier = Modifier
-                        .align(Alignment.BottomStart)
-                        .padding(16.dp),
-                    color = Color.White
+                    text = buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(
+                                color = Color.Green,
+                                fontSize = 50.sp
+                            )
+                        ) {
+                            append("B")
+                        }
+                        append("harath ")
+                        withStyle(
+                            style = SpanStyle(
+                                color = Color.Green,
+                                fontSize = 50.sp
+                            )
+                        ) {
+                            append("K")
+                        }
+                        append("alyan")
+                        withStyle(
+                            style = SpanStyle(
+                                color = Color.Red,
+                                fontSize = 50.sp
+                            )
+                        ) {
+                            append(" S")
+                        }
+                    },
+                    color = Color.White,
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    textDecoration = TextDecoration.Underline,
                 )
-                /*Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(12.dp),
-                    contentAlignment = Alignment.BottomStart
-                ) {
-                    Text(
-                        text = title,
-                        style = TextStyle(color = Color.White, fontSize = 16.sp)
-                    )
-                }*/
             }
         }
     }
+
+    /* @Composable
+     fun ImageCard(
+         painter: Painter,
+         title: String,
+         contentDescription: String,
+         modifier: Modifier = Modifier
+     ) {
+         Card(
+             modifier = modifier,
+             shape = RoundedCornerShape(20.dp),
+             elevation = 5.dp
+         ) {
+             Box(modifier = Modifier.height(400.dp)) {
+                 //Image
+                 Image(
+                     painter = painter,
+                     contentDescription = contentDescription,
+                     contentScale = ContentScale.Crop
+                 )
+                 //Using for Gradient!
+                 Box(
+                     modifier = Modifier
+                         .fillMaxSize()
+                         .background(
+                             Brush.verticalGradient(
+                                 colors = listOf(Color.Transparent, Color.Black),
+                                 startY = 300f
+                             )
+                         )
+                 )
+                 //Text
+                 Text(
+                     text = title,
+                     modifier = Modifier
+                         .align(Alignment.BottomStart)
+                         .padding(16.dp),
+                     color = Color.White
+                 )
+
+             }
+         }
+     }*/
 
 }
 
