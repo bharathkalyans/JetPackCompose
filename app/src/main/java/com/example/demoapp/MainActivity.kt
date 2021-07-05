@@ -3,6 +3,7 @@ package com.example.demoapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,10 +12,16 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ChainStyle
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ConstraintSet
+import androidx.constraintlayout.compose.Dimension
 import kotlinx.coroutines.launch
 
 
@@ -22,72 +29,44 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val constraints = ConstraintSet {
+                val greenBox = createRefFor("greenBox")
+                val redBox = createRefFor("redBox")
+                val guideline = createGuidelineFromTop(0.3f)
 
-            LazyColumn {
-                itemsIndexed(
-                    listOf(
-                        "Bharath",
-                        "Kalyan",
-                        "is",
-                        "my",
-                        "Name!!",
-                        "Bharath",
-                        "Kalyan",
-                        "is",
-                        "my",
-                        "Name!!",
-                        "Bharath",
-                        "Kalyan",
-                        "is",
-                        "my",
-                        "Name!!",
-                        "Bharath",
-                        "Kalyan",
-                        "is",
-                        "my",
-                        "Name!!"
-                    )
-                ) { index, string ->
-                    Text(
-                        text = string,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(24.dp)
-                    )
+                constrain(greenBox) {
+                    top.linkTo(guideline)
+                    start.linkTo(parent.start)
+                    width = Dimension.value(100.dp)
+                    height = Dimension.value(100.dp)
                 }
-                items(5000) {
-                    Text(
-                        text = "Item $it",
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(24.dp)
-                    )
+                constrain(redBox) {
+                    top.linkTo(parent.top)
+                    start.linkTo(greenBox.end)
+//                    width = Dimension.fillToConstraints
+                    width = Dimension.value(100.dp)
+                    height = Dimension.value(100.dp)
                 }
+
+                createHorizontalChain(greenBox, redBox, chainStyle = ChainStyle.Packed)
             }
 
-            //Not good as Performance wise as all Items are loaded on start time!
-            /*val scrollState = rememberScrollState()
-            Column(
-                modifier = Modifier.verticalScroll(scrollState)
-            ) {
-                for (i in 1..51) {
-                    Text(
-                        text = "Item $i",
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(24.dp)
-                    )
-                }
-            }*/
+            ConstraintLayout(constraints, modifier = Modifier.fillMaxSize()) {
+                Box(
+                    modifier = Modifier
+                        .background(Color.Green)
+                        .layoutId("greenBox")
+                )
+
+                Box(
+                    modifier = Modifier
+                        .background(Color.Red)
+                        .layoutId("redBox")
+                )
+
+
+            }
+
         }
 
     }
